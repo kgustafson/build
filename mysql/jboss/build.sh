@@ -1,1 +1,0 @@
-docker pull jboss/wildfly
