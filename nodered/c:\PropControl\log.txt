@@ -1,0 +1,8 @@
+{"time":1572797778970,"payload":"Test"}
+{"time":1572797803962,"payload":"Look lively, sunshine!"}
+{"time":1572797811042,"payload":"SOLVE"}
+{"time":1572797814034,"payload":"RESET"}
+{"time":1572908419063,"payload":"sdf"}
+{"time":1572908422537,"payload":"[{\"H1 Look lively, sunshine!\":\"Look lively, sunshine!\"},{\"H2 Look under the table\":\"Look under the table\"},{\"H3 Did you hear something?\":\"Did you hear something?\"}]"}
+{"time":1572908468147,"payload":"Look under the table"}
+{"time":1572908479737,"payload":"This is a test"}
