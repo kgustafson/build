@@ -1,4 +1,8 @@
 # kubeadm-dind-cluster [![CircleCI](https://circleci.com/gh/kubernetes-sigs/kubeadm-dind-cluster/tree/master.svg?style=svg)](https://circleci.com/gh/kubernetes-sigs/kubeadm-dind-cluster/tree/master) [![Travis CI](https://travis-ci.org/kubernetes-sigs/kubeadm-dind-cluster.svg?branch=master)](https://travis-ci.org/kubernetes-sigs/kubeadm-dind-cluster)
+
+**NOTE: This project is deprecated in favor of [kind](https://kind.sigs.k8s.io/).
+Try [kind](https://kind.sigs.k8s.io/) today, it's great!**
+
 A Kubernetes multi-node cluster for developer _of_ Kubernetes and
 projects that extend Kubernetes. Based on kubeadm and DIND (Docker in
 Docker).
@@ -23,7 +27,7 @@ use `kubectl` 1.13.x with `hyperkube` 1.12.x). As an alternative,
 you can set `DOWNLOAD_KUBECTL` to a non-empty string in your
 config.sh so `kubeadm-dind-cluster` will download it for you.
 
-`kubeadm-dind-cluster` supports k8s versions 1.10.x through 1.13.x.
+`kubeadm-dind-cluster` supports k8s versions 1.12.x through 1.15.x.
 
 **As of now, running `kubeadm-dind-cluster` on Docker with `btrfs`
 storage driver is not supported.**
@@ -51,45 +55,45 @@ IPv6 and thus clusters cannot be formed using IPv6 addresses.
 
 ## Using preconfigured scripts
 `kubeadm-dind-cluster` currently provides preconfigured scripts for
-Kubernetes versions 1.10 through 1.13 published as part of GitHub
+Kubernetes versions 1.12 through 1.15 published as part of GitHub
 releases. Each preconfigured script is pinned to the corresponding
 image tag and SHA256 digest, so it will not be broken by changes
 in kubeadm-dind-cluster master branch.
 
 The preconfigured scripts are convenient for use with projects that
-extend or use Kubernetes. For example, you can start Kubernetes 1.13
+extend or use Kubernetes. For example, you can start Kubernetes 1.14
 like this:
 
 ```shell
-$ wget https://github.com/kubernetes-sigs/kubeadm-dind-cluster/releases/download/v0.1.0/dind-cluster-v1.13.sh
-$ chmod +x dind-cluster-v1.13.sh
+$ wget -O dind-cluster.sh https://github.com/kubernetes-sigs/kubeadm-dind-cluster/releases/download/v0.2.0/dind-cluster-v1.14.sh 
+$ chmod +x dind-cluster.sh
 
 $ # start the cluster
-$ ./dind-cluster-v1.13.sh up
+$ ./dind-cluster.sh up
 
 $ # add kubectl directory to PATH
 $ export PATH="$HOME/.kubeadm-dind-cluster:$PATH"
 
 $ kubectl get nodes
 NAME          STATUS    ROLES     AGE       VERSION
-kube-master   Ready     master    4m        v1.13.0
-kube-node-1   Ready     <none>    2m        v1.13.0
-kube-node-2   Ready     <none>    2m        v1.13.0
+kube-master   Ready     master    4m        v1.14.0
+kube-node-1   Ready     <none>    2m        v1.14.0
+kube-node-2   Ready     <none>    2m        v1.14.0
 
-$ # k8s dashboard available at http://localhost:8080/api/v1/namespaces/kube-system/services/kubernetes-dashboard:/proxy
+$ # k8s dashboard available at http://localhost:<DOCKER_EXPOSED_PORT>/api/v1/namespaces/kube-system/services/kubernetes-dashboard:/proxy. See your console for the URL.
 
 $ # restart the cluster, this should happen much quicker than initial startup
-$ ./dind-cluster-v1.13.sh up
+$ ./dind-cluster.sh up
 
 $ # stop the cluster
-$ ./dind-cluster-v1.13.sh down
+$ ./dind-cluster.sh down
 
 $ # remove DIND containers and volumes
-$ ./dind-cluster-v1.13.sh clean
+$ ./dind-cluster.sh clean
 ```
 
-Replace 1.13 with 1.10 .. 1.12 to use other Kubernetes versions.
-**Important note:** you need to do `./dind-cluster....sh clean` when
+Replace 1.14 with 1.13 or 1.12 to use older Kubernetes versions.
+**Important note:** you need to do `./dind-cluster.sh clean` when
 you switch between Kubernetes versions (but no need to do this between
 rebuilds if you use `BUILD_HYPERKUBE=y` like described below).
 
@@ -252,11 +256,14 @@ CNI plugin to use via `CNI_PLUGIN` variable (`bridge`, `ptp`,
 You can also edit the version appropriate kubeadm.conf.#.##.tmpl file
 in the image/ directory, to customize how KubeAdm works. This will require
 that you build a new image using build/build-local.sh and then setting this
-env variable:
+environment variable:
 
 ```
-export DIND_IMAGE==mirantis/kubeadm-dind-cluster:local
+export DIND_IMAGE=mirantis/kubeadm-dind-cluster:local
 ```
+
+Note: the DIND_IMAGE environment variable will work only with `./dind-cluster.sh` script.  
+It will not work with preconfigured scripts.
 
 Just keep in mind, there are some parameters in double curly-brackets that
 are used to substitue settings, based on other dind-cluster.sh config settings.
@@ -543,7 +550,7 @@ that we have IPv6 available for the test cases. Note, that while internal IPv6
 is configured, external IPv6 is not available.
 
 There are two slightly different kind of tests which run for all version
-starting from `v1.10`:
+starting from `v1.12`:
 
 #### `TEST_K8S_VER='1.x' ./test/test-ipv6-only.sh`
 

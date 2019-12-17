@@ -31,7 +31,7 @@
 
 # ci-xenial-systemd image source: https://github.com/errordeveloper/kubeadm-ci-dind
 # The tag includes commit id
-FROM k8s.gcr.io/debian-base-amd64:0.3
+FROM k8s.gcr.io/debian-base-amd64:0.4.1
 
 STOPSIGNAL SIGRTMIN+3
 
@@ -55,7 +55,7 @@ ENV CONTAINERD_SHA256=9818e3af4f9aac8d55fc3f66114346db1d1acd48d45f88b2cefd3d3baf
 ENV container docker
 
 ARG DEBIAN_FRONTEND=noninteractive
-RUN clean-install apt-utils \
+RUN clean-install \
     apt-transport-https \
     bash \
     bridge-utils \
@@ -118,8 +118,6 @@ COPY start_services /usr/local/bin/
 COPY rundocker /usr/local/bin
 COPY dindnet /usr/local/bin
 COPY snapshot /usr/local/bin
-COPY kubeadm.conf.1.10.tmpl /etc/kubeadm.conf.1.10.tmpl
-COPY kubeadm.conf.1.11.tmpl /etc/kubeadm.conf.1.11.tmpl
 COPY kubeadm.conf.1.12.tmpl /etc/kubeadm.conf.1.12.tmpl
 COPY kubeadm.conf.1.13.tmpl /etc/kubeadm.conf.1.13.tmpl
 COPY dind-cluster-rbd /usr/bin/rbd
