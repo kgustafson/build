@@ -1,2 +1,2 @@
-docker container stop jupyterLab
-docker container rm jupyterLab
+docker container stop datascience-notebook-container
+docker container rm datascience-notebook-container
