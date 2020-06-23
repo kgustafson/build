@@ -9,3 +9,4 @@ scikit-image
 tensorflow
 keras
 nltk
+psycopg2

@@ -11,6 +11,22 @@ services:
       container_name:   datascience-notebook-container
       environment:
         - JUPYTER_ENABLE_LAB=yes
+  db:
+      image: postgres
+      container_name: postgresql
+      restart: always
+      environment:
+        POSTGRES_PASSWORD: example
+      volumes:
+        - mypostgres-data:/var/lib/postgresql/data
+
+  adminer:
+      image: adminer
+      container_name: adminer
+      restart: always
+      ports:
+        - 8081:8080
 
 volumes:
+   mypostgres-data:
    jupyter-data:
