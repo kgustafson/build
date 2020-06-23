@@ -8,24 +8,36 @@ services:
         - jupyter-data:/home/jovyan/work
       ports:
         - 8888:8888
+        - 5432:5432
       container_name:   datascience-notebook-container
       environment:
         - JUPYTER_ENABLE_LAB=yes
+      networks:
+        - jnet
   db:
       image: postgres
-      container_name: postgresql
+      container_name: postgresql_container
       restart: always
       environment:
         POSTGRES_PASSWORD: example
       volumes:
         - mypostgres-data:/var/lib/postgresql/data
+      networks:
+        - jnet
 
   adminer:
       image: adminer
-      container_name: adminer
+      container_name: adminer_container
       restart: always
       ports:
         - 8081:8080
+      networks:
+        - jnet
+
+networks:
+   jnet:
+      driver: bridge
+
 
 volumes:
    mypostgres-data:
