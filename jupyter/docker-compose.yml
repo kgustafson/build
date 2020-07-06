@@ -8,7 +8,6 @@ services:
         - jupyter-data:/home/jovyan/work
       ports:
         - 8888:8888
-        - 5432:5432
       container_name:   datascience-notebook-container
       environment:
         - JUPYTER_ENABLE_LAB=yes
@@ -19,7 +18,11 @@ services:
       container_name: postgresql_container
       restart: always
       environment:
-        POSTGRES_PASSWORD: example
+        - POSTGRES_USER=airflow
+        - POSTGRES_PASSWORD=airflow
+        - POSTGRES_DB=airflow
+      ports:
+        - "5432:5432"
       volumes:
         - mypostgres-data:/var/lib/postgresql/data
       networks:
@@ -33,7 +36,35 @@ services:
         - 8081:8080
       networks:
         - jnet
-
+  webserver:
+      image: puckel/docker-airflow:1.10.1
+      build:
+        context: https://github.com/puckel/docker-airflow.git#1.10.1
+        dockerfile: Dockerfile
+        args:
+          AIRFLOW_DEPS: gcp_api,s3
+          PYTHON_DEPS: sqlalchemy==1.2.0
+      restart: always
+      depends_on:
+        - db
+      environment:
+        - LOAD_EX=n
+        - EXECUTOR=Local
+        - FERNET_KEY=jsDPRErfv8Z_eVTnGfF8ywd19j4pyqE3NpdUBA_oRTo=
+      volumes:
+        - ./examples/intro-example/dags:/usr/local/airflow/dags
+        # Uncomment to include custom plugins
+        #       # - ./plugins:/usr/local/airflow/plugins
+      ports:
+        - "8080:8080"
+      command: webserver
+      healthcheck:
+        test: ["CMD-SHELL", "[ -f /usr/local/airflow/airflow-webserver.pid ]"]
+        interval: 30s
+        timeout: 30s
+        retries: 3
+      networks:
+        - jnet
 networks:
    jnet:
       driver: bridge
