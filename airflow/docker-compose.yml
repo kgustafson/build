@@ -10,7 +10,8 @@ services:
       - "5433:5432"
 
   webserver:
-    image: puckel/docker-airflow:1.10.1
+    #image: puckel/docker-airflow:1.10.1
+    image: sda_airflow:latest
     build:
       context: https://github.com/puckel/docker-airflow.git#1.10.1
       dockerfile: Dockerfile
