@@ -1,0 +1,9 @@
+{
+	"demo_variables_config": {
+		"var1": "/usr/local/airflow/tasks/subset.py",
+		"var2": "/usr/local/airflow/tasks/outlier_detection.py",
+		"var3": "/usr/local/airflow/tasks/remove_simulator_pauses.py",
+		"var4": "/usr/local/airflow/tasks/calculate_maintenance_score.py"
+
+	}
+}

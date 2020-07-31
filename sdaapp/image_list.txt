@@ -1,0 +1,15 @@
+REPOSITORY                               TAG                 IMAGE ID            CREATED             SIZE
+puckel/docker-airflow                    1.10.1              9398e4adb6fe        45 hours ago        832 MB
+jupyter/notebook                         latest              c0ddabf5e345        7 days ago          6.23 GB
+docker.io/python                         3.6-slim            42ab29dc5406        7 days ago          151 MB
+jupyter_datascience-notebook             latest              9366c83bedbc        2 weeks ago         4.94 GB
+docker.io/jupyter/datascience-notebook   latest              240bac6f472e        2 weeks ago         5.15 GB
+docker.io/jupyter/scipy-notebook         latest              9ae88507d113        2 weeks ago         3.93 GB
+rhel7.4-min                              7.4                 7c1a561fb7a7        2 weeks ago         276 MB
+docker.io/centos                         latest              831691599b88        3 weeks ago         215 MB
+docker.io/adminer                        latest              d3d18514e50a        3 weeks ago         89.8 MB
+docker.io/postgres                       9.6                 51e37c2850c7        4 weeks ago         200 MB
+docker.io/postgres                       latest              b97bae343e06        4 weeks ago         313 MB
+docker.io/mysql                          latest              be0dbf01a0f3        4 weeks ago         541 MB
+docker.io/alpine                         edge                5737d7d248e9        2 months ago        5.6 MB
+docker.io/continuumio/miniconda3         latest              b4adc22212f1        3 months ago        429 MB
