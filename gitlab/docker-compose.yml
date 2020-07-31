@@ -1,5 +1,6 @@
 web:
   image: 'gitlab/gitlab-ce:latest'
+  container_name: gitlab_web
   restart: always
 #  name: 'gitlab'
   hostname: 'gitlab.example.com'
